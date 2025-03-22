@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>تشكيلة لجنة الامتحانات</title>
+    <title>تشكيلة اللجنة الرابعة</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -24,14 +28,14 @@
       }
       .football-field {
         width: 100%;
-        max-width: 800px;
-        height: 80vh;
-        max-height: 600px;
+        max-width: 900px;
+        height: 90vh;
+        max-height: 700px;
         background-color: #4caf50;
         margin: 0 auto;
         position: relative;
         border: 5px solid white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
         background-image: linear-gradient(to right, white 2px, transparent 2px),
           linear-gradient(to bottom, white 2px, transparent 2px);
         background-size: 100px 100px;
@@ -88,8 +92,8 @@
         transform: translateX(-50%);
       }
       .player {
-        width: clamp(40px, 8vw, 60px);
-        height: clamp(40px, 8vw, 60px);
+        width: clamp(50px, 10vw, 70px);
+        height: clamp(50px, 10vw, 70px);
         background-color: #e74c3c;
         border-radius: 50%;
         color: white;
@@ -98,8 +102,10 @@
         align-items: center;
         position: absolute;
         text-align: center;
-        font-size: clamp(8px, 1.2vw, 10px);
+        padding: 5px;
         font-weight: bold;
+        font-size: clamp(10px, 1.5vw, 14px);
+        line-height: 1.2;
         cursor: pointer;
         transition: all 0.3s;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -118,6 +124,8 @@
       .player-name {
         max-width: 100%;
         word-wrap: break-word;
+        font-family: "Cairo", Arial, sans-serif;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
       }
       .controls {
         margin: 20px auto;
@@ -253,8 +261,8 @@
         margin-bottom: 10px;
       }
       .bench-player {
-        width: clamp(35px, 7vw, 50px);
-        height: clamp(35px, 7vw, 50px);
+        width: clamp(45px, 9vw, 65px);
+        height: clamp(45px, 9vw, 65px);
         background-color: #9b59b6;
         border-radius: 50%;
         color: white;
@@ -262,12 +270,13 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        font-size: clamp(6px, 1vw, 8px);
+        font-size: clamp(9px, 1.4vw, 12px);
         font-weight: bold;
         cursor: pointer;
         transition: all 0.3s;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         animation: none;
+        padding: 4px;
       }
       .bench-player:hover {
         transform: scale(1.1);
@@ -362,7 +371,7 @@
 
         .football-field {
           width: 95%;
-          height: 60vh;
+          height: 70vh;
           margin: 10px auto;
         }
 
@@ -389,15 +398,15 @@
         }
 
         .player {
-          width: clamp(30px, 10vw, 40px);
-          height: clamp(30px, 10vw, 40px);
-          font-size: clamp(6px, 1.8vw, 8px);
+          width: clamp(40px, 12vw, 55px);
+          height: clamp(40px, 12vw, 55px);
+          font-size: clamp(8px, 2vw, 11px);
         }
 
         .bench-player {
-          width: clamp(25px, 8vw, 35px);
-          height: clamp(25px, 8vw, 35px);
-          font-size: clamp(5px, 1.5vw, 7px);
+          width: clamp(35px, 10vw, 50px);
+          height: clamp(35px, 10vw, 50px);
+          font-size: clamp(7px, 1.8vw, 10px);
         }
 
         .player-name {
@@ -442,13 +451,15 @@
         }
 
         .player {
-          width: clamp(35px, 12vw, 50px);
-          height: clamp(35px, 12vw, 50px);
+          width: clamp(35px, 11vw, 45px);
+          height: clamp(35px, 11vw, 45px);
+          font-size: clamp(7px, 1.8vw, 9px);
         }
 
         .bench-player {
-          width: clamp(30px, 10vw, 45px);
-          height: clamp(30px, 10vw, 45px);
+          width: clamp(30px, 9vw, 40px);
+          height: clamp(30px, 9vw, 40px);
+          font-size: clamp(6px, 1.6vw, 8px);
         }
 
         .player-name {
@@ -476,6 +487,10 @@
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
         }
+
+        .football-field {
+          height: 60vh;
+        }
       }
 
       @media screen and (orientation: portrait) {
@@ -501,7 +516,7 @@
   </head>
   <body>
     <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
-    <h1>تشكيلة فريق كرة القدم - مدرسة السويس للتكنولوجيا التطبيقية</h1>
+    <h1>تشكيلة اللجنة الرابعة - مدرسة السويس للتكنولوجيا التطبيقية</h1>
     <div class="formation-name" id="formation-name">التشكيل 4-4-2</div>
 
     <div class="football-field" id="field">
