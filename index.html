@@ -11,10 +11,12 @@
         margin: 0;
         padding: 20px;
         direction: rtl;
+        transition: background-color 0.5s ease;
       }
       h1 {
         text-align: center;
         color: #2c3e50;
+        animation: fadeIn 1s ease-in;
       }
       .football-field {
         width: 800px;
@@ -27,6 +29,7 @@
         background-image: linear-gradient(to right, white 2px, transparent 2px),
           linear-gradient(to bottom, white 2px, transparent 2px);
         background-size: 100px 100px;
+        animation: fieldFadeIn 1.2s ease-in;
       }
       .center-circle {
         width: 150px;
@@ -37,12 +40,36 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        animation: drawCircle 1.5s ease-out;
+      }
+      @keyframes drawCircle {
+        0% {
+          width: 0;
+          height: 0;
+          opacity: 0;
+        }
+        100% {
+          width: 150px;
+          height: 150px;
+          opacity: 1;
+        }
       }
       .goal-area {
         width: 150px;
         height: 50px;
         border: 5px solid white;
         position: absolute;
+        animation: slideIn 0.8s ease-out;
+      }
+      @keyframes slideIn {
+        0% {
+          width: 0;
+          opacity: 0;
+        }
+        100% {
+          width: 150px;
+          opacity: 1;
+        }
       }
       .goal-area-top {
         top: 0;
@@ -71,10 +98,29 @@
         transition: all 0.3s;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         z-index: 2;
+        animation: playerAppear 0.5s ease-out;
+      }
+      @keyframes playerAppear {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        70% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
       .player:hover {
         transform: scale(1.1);
         z-index: 10;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+      }
+      .player.dragging {
+        opacity: 0.5;
+        transform: scale(1.1);
       }
       .player-name {
         max-width: 100%;
@@ -83,6 +129,27 @@
       .controls {
         margin: 20px auto;
         text-align: center;
+        animation: fadeIn 1s ease-in;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fieldFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
       button {
         padding: 10px 20px;
@@ -93,15 +160,41 @@
         border-radius: 5px;
         cursor: pointer;
         font-family: "Cairo", Arial, sans-serif;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
       }
       button:hover {
         background-color: #2980b9;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      button:active {
+        transform: translateY(-1px);
+      }
+      button::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s;
+      }
+      button:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
       }
       .formation-name {
         text-align: center;
         font-size: 18px;
         margin-bottom: 10px;
         font-weight: bold;
+        animation: fadeIn 0.8s ease-in;
       }
       .player-list {
         width: 800px;
@@ -111,6 +204,19 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        animation: expandDown 0.5s forwards;
+      }
+      @keyframes expandDown {
+        from {
+          opacity: 0;
+          max-height: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          max-height: 1000px;
+          transform: translateY(0);
+        }
       }
       table {
         width: 100%;
@@ -129,9 +235,116 @@
       .toggle-list {
         margin-top: 20px;
       }
+
+      /* بنش اللاعبين (الاحتياطي) */
+      .player-bench {
+        width: 800px;
+        min-height: 120px;
+        background-color: #34495e;
+        margin: 20px auto;
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 1s ease-in;
+      }
+      .bench-title {
+        width: 100%;
+        color: white;
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .bench-player {
+        width: 70px;
+        height: 70px;
+        background-color: #9b59b6;
+        border-radius: 50%;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        animation: playerAppear 0.5s ease-out;
+      }
+      .bench-player:hover {
+        transform: scale(1.1);
+        background-color: #8e44ad;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      }
+      .dropzone {
+        border: 2px dashed rgba(255, 255, 255, 0.4);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      /* Theme toggle */
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #2c3e50;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        z-index: 100;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      .theme-toggle:hover {
+        transform: rotate(180deg);
+        background-color: #e74c3c;
+      }
+
+      /* Dark theme */
+      body.dark-theme {
+        background-color: #2c3e50;
+        color: white;
+      }
+      body.dark-theme h1 {
+        color: #ecf0f1;
+      }
+      body.dark-theme .football-field {
+        background-color: #27ae60;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      }
+      body.dark-theme .player {
+        background-color: #e74c3c;
+      }
+      body.dark-theme .bench-player {
+        background-color: #8e44ad;
+      }
+      body.dark-theme .bench-player:hover {
+        background-color: #9b59b6;
+      }
+      body.dark-theme .player-list {
+        background-color: #34495e;
+        color: white;
+      }
+      body.dark-theme td {
+        border-bottom: 1px solid #3498db;
+        color: #ecf0f1;
+      }
+      body.dark-theme .player-bench {
+        background-color: #2c3e50;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      }
     </style>
   </head>
   <body>
+    <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
     <h1>تشكيلة فريق كرة القدم - مدرسة السويس للتكنولوجيا التطبيقية</h1>
     <div class="formation-name" id="formation-name">التشكيل 4-4-2</div>
 
@@ -139,6 +352,11 @@
       <div class="center-circle"></div>
       <div class="goal-area goal-area-top"></div>
       <div class="goal-area goal-area-bottom"></div>
+    </div>
+
+    <div class="player-bench" id="player-bench">
+      <div class="bench-title">لاعبي الاحتياط</div>
+      <!-- سيتم إضافة لاعبي الاحتياط هنا بواسطة الجافاسكربت -->
     </div>
 
     <div class="controls">
@@ -189,6 +407,11 @@
         { id: 18, name: "محمد محمود عبد الفتاح ابو الحسن", seatNumber: "C372" },
       ];
 
+      // تبديل السمة (الثيم)
+      function toggleTheme() {
+        document.body.classList.toggle("dark-theme");
+      }
+
       // إنشاء جدول اللاعبين
       function createPlayerTable() {
         const table = document.querySelector(".player-list table");
@@ -206,13 +429,24 @@
 
       createPlayerTable();
 
-      // إضافة اللاعبين للملعب
+      // إضافة اللاعبين للملعب ودكة الاحتياط
       function addPlayersToField(formation) {
         const field = document.getElementById("field");
+        const bench = document.getElementById("player-bench");
 
-        // إزالة اللاعبين الحاليين
-        const existingPlayers = document.querySelectorAll(".player");
+        // إزالة اللاعبين الحاليين من الملعب ودكة الاحتياط
+        const existingPlayers = document.querySelectorAll(
+          ".player, .bench-player"
+        );
         existingPlayers.forEach((player) => player.remove());
+
+        // إضافة عنوان لدكة الاحتياط
+        if (!document.querySelector(".bench-title")) {
+          const benchTitle = document.createElement("div");
+          benchTitle.className = "bench-title";
+          benchTitle.textContent = "لاعبي الاحتياط";
+          bench.appendChild(benchTitle);
+        }
 
         // إضافة اللاعبين حسب التشكيل
         let positions = [];
@@ -280,10 +514,15 @@
             break;
         }
 
-        // إضافة 11 لاعب في التشكيل
-        for (let i = 0; i < Math.min(11, players.length); i++) {
+        // حساب عدد اللاعبين في التشكيلة الأساسية
+        const starters = Math.min(11, players.length);
+
+        // إضافة اللاعبين الأساسيين في الملعب
+        for (let i = 0; i < starters; i++) {
           const player = document.createElement("div");
           player.className = "player";
+          player.id = `player-field-${i}`;
+          player.setAttribute("data-player-id", players[i].id);
           player.innerHTML = `<div class="player-name">${players[i].name}</div>`;
           player.style.top = positions[i].top;
           player.style.left = positions[i].left;
@@ -291,15 +530,38 @@
 
           // جعل اللاعبين قابلين للسحب
           player.draggable = true;
-          player.addEventListener("dragstart", dragStart);
 
-          field.appendChild(player);
+          // إضافة تأخير للرسوم المتحركة
+          setTimeout(() => {
+            field.appendChild(player);
+          }, i * 100);
+        }
+
+        // إضافة باقي اللاعبين في دكة الاحتياط
+        for (let i = starters; i < players.length; i++) {
+          const player = document.createElement("div");
+          player.className = "bench-player";
+          player.id = `player-bench-${i}`;
+          player.setAttribute("data-player-id", players[i].id);
+          player.innerHTML = `<div class="player-name">${players[i].name}</div>`;
+          player.title = `${players[i].name} - ${players[i].seatNumber}`;
+
+          // جعل لاعبي الاحتياط قابلين للسحب
+          player.draggable = true;
+
+          // إضافة تأخير للرسوم المتحركة
+          setTimeout(() => {
+            bench.appendChild(player);
+          }, (i - starters) * 100 + 500);
         }
 
         // تحديث اسم التشكيل
         document.getElementById(
           "formation-name"
         ).textContent = `التشكيل ${formation}`;
+
+        // إعادة تعيين استماعات السحب والإفلات
+        setupDragAndDrop();
       }
 
       function changeFormation(formation) {
@@ -315,55 +577,120 @@
         }
       }
 
-      // وظائف السحب والإفلات
-      function dragStart(e) {
-        const player = e.target;
-        e.dataTransfer.setData("text/plain", player.id);
+      // وظائف السحب والإفلات المُحسّنة
+      function setupDragAndDrop() {
+        const draggables = document.querySelectorAll(".player, .bench-player");
+        const droppables = [
+          document.getElementById("field"),
+          document.getElementById("player-bench"),
+        ];
 
-        // إضافة استماع للسحب على الملعب
-        const field = document.getElementById("field");
-        field.addEventListener("dragover", dragOver);
-        field.addEventListener("drop", drop);
+        draggables.forEach((draggable) => {
+          draggable.addEventListener("dragstart", dragStart);
+          draggable.addEventListener("dragend", dragEnd);
+        });
+
+        droppables.forEach((droppable) => {
+          droppable.addEventListener("dragover", dragOver);
+          droppable.addEventListener("dragenter", dragEnter);
+          droppable.addEventListener("dragleave", dragLeave);
+          droppable.addEventListener("drop", drop);
+        });
+      }
+
+      function dragStart(e) {
+        this.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", this.id);
+        e.dataTransfer.setData(
+          "application/json",
+          JSON.stringify({
+            id: this.id,
+            playerId: this.getAttribute("data-player-id"),
+            name: this.querySelector(".player-name").textContent,
+            fromField: this.classList.contains("player"),
+          })
+        );
+
+        setTimeout(() => {
+          this.style.opacity = "0.4";
+        }, 0);
+      }
+
+      function dragEnd() {
+        this.classList.remove("dragging");
+        this.style.opacity = "1";
       }
 
       function dragOver(e) {
         e.preventDefault();
       }
 
+      function dragEnter(e) {
+        e.preventDefault();
+        this.classList.add("dropzone");
+      }
+
+      function dragLeave() {
+        this.classList.remove("dropzone");
+      }
+
       function drop(e) {
         e.preventDefault();
-        const player = document.querySelector('.player[dragging="true"]');
-        if (player) {
-          // تحديد الموقع الجديد
-          const fieldRect = document
-            .getElementById("field")
-            .getBoundingClientRect();
+        this.classList.remove("dropzone");
+
+        const data = JSON.parse(e.dataTransfer.getData("application/json"));
+        const draggedElement = document.getElementById(data.id);
+
+        if (!draggedElement) return;
+
+        // تحديد ما إذا كان السحب من الملعب إلى الاحتياط أو العكس
+        const toField = this.id === "field";
+        const fromField = data.fromField;
+
+        // إزالة العنصر المسحوب من الموقع الحالي
+        draggedElement.remove();
+
+        // إنشاء عنصر جديد في الموقع الهدف
+        const newElement = document.createElement("div");
+
+        if (toField) {
+          // إضافة لاعب إلى الملعب
+          newElement.className = "player";
+          newElement.id = `player-field-${Date.now()}`;
+
+          // تحديد الموقع في الملعب
+          const fieldRect = this.getBoundingClientRect();
           const x = e.clientX - fieldRect.left;
           const y = e.clientY - fieldRect.top;
 
-          // تعيين الموقع الجديد
-          player.style.left = `${(x / fieldRect.width) * 100}%`;
-          player.style.top = `${(y / fieldRect.height) * 100}%`;
-          player.setAttribute("dragging", "false");
+          newElement.style.left = `${(x / fieldRect.width) * 100}%`;
+          newElement.style.top = `${(y / fieldRect.height) * 100}%`;
+
+          // رسم متحرك للإضافة إلى الملعب
+          newElement.style.animation = "playerAppear 0.5s ease-out";
+        } else {
+          // إضافة لاعب إلى الاحتياط
+          newElement.className = "bench-player";
+          newElement.id = `player-bench-${Date.now()}`;
+
+          // رسم متحرك للإضافة إلى الاحتياط
+          newElement.style.animation = "playerAppear 0.5s ease-out";
         }
+
+        // إعداد العنصر الجديد
+        newElement.setAttribute("data-player-id", data.playerId);
+        newElement.innerHTML = `<div class="player-name">${data.name}</div>`;
+        newElement.draggable = true;
+        newElement.addEventListener("dragstart", dragStart);
+        newElement.addEventListener("dragend", dragEnd);
+
+        // إضافة العنصر إلى الهدف
+        this.appendChild(newElement);
       }
 
       // تحميل التشكيل الافتراضي
       window.onload = function () {
         addPlayersToField("4-4-2");
-
-        // إضافة استماع للسحب على كل اللاعبين
-        document.addEventListener("dragstart", function (e) {
-          if (e.target.classList.contains("player")) {
-            e.target.setAttribute("dragging", "true");
-          }
-        });
-
-        document.addEventListener("dragend", function (e) {
-          if (e.target.classList.contains("player")) {
-            e.target.setAttribute("dragging", "false");
-          }
-        });
       };
     </script>
   </body>
