@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>تشكيلة كرة القدم</title>
+    <title>تشكيلة لجنة الامتحانات</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <style>
       body {
         font-family: "Cairo", Arial, sans-serif;
@@ -19,8 +23,10 @@
         animation: fadeIn 1s ease-in;
       }
       .football-field {
-        width: 800px;
-        height: 600px;
+        width: 100%;
+        max-width: 800px;
+        height: 80vh;
+        max-height: 600px;
         background-color: #4caf50;
         margin: 0 auto;
         position: relative;
@@ -82,8 +88,8 @@
         transform: translateX(-50%);
       }
       .player {
-        width: 80px;
-        height: 80px;
+        width: clamp(40px, 8vw, 60px);
+        height: clamp(40px, 8vw, 60px);
         background-color: #e74c3c;
         border-radius: 50%;
         color: white;
@@ -92,26 +98,13 @@
         align-items: center;
         position: absolute;
         text-align: center;
-        font-size: 12px;
+        font-size: clamp(8px, 1.2vw, 10px);
         font-weight: bold;
         cursor: pointer;
         transition: all 0.3s;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         z-index: 2;
-        animation: playerAppear 0.5s ease-out;
-      }
-      @keyframes playerAppear {
-        0% {
-          transform: scale(0);
-          opacity: 0;
-        }
-        70% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1);
-          opacity: 1;
-        }
+        animation: none;
       }
       .player:hover {
         transform: scale(1.1);
@@ -197,9 +190,9 @@
         animation: fadeIn 0.8s ease-in;
       }
       .player-list {
-        width: 800px;
-        margin: 20px auto;
-        display: none;
+        width: 100%;
+        max-width: 800px;
+        overflow-x: auto;
         background-color: white;
         padding: 20px;
         border-radius: 10px;
@@ -238,7 +231,8 @@
 
       /* بنش اللاعبين (الاحتياطي) */
       .player-bench {
-        width: 800px;
+        width: 100%;
+        max-width: 800px;
         min-height: 120px;
         background-color: #34495e;
         margin: 20px auto;
@@ -259,8 +253,8 @@
         margin-bottom: 10px;
       }
       .bench-player {
-        width: 70px;
-        height: 70px;
+        width: clamp(35px, 7vw, 50px);
+        height: clamp(35px, 7vw, 50px);
         background-color: #9b59b6;
         border-radius: 50%;
         color: white;
@@ -268,12 +262,12 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        font-size: 10px;
+        font-size: clamp(6px, 1vw, 8px);
         font-weight: bold;
         cursor: pointer;
         transition: all 0.3s;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        animation: playerAppear 0.5s ease-out;
+        animation: none;
       }
       .bench-player:hover {
         transform: scale(1.1);
@@ -341,6 +335,168 @@
         background-color: #2c3e50;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
       }
+
+      /* إضافة أنماط للتبديل */
+      .player.switching,
+      .bench-player.switching {
+        animation: bounceOut 0.5s forwards;
+      }
+
+      .player.switched,
+      .bench-player.switched {
+        animation: bounceIn 0.5s forwards;
+      }
+
+      /* Media Queries للأجهزة المختلفة */
+      @media screen and (max-width: 768px) {
+        body {
+          padding: 10px;
+          overflow-x: hidden;
+        }
+
+        h1 {
+          font-size: 1.2rem;
+          padding: 0 10px;
+          word-wrap: break-word;
+        }
+
+        .football-field {
+          width: 95%;
+          height: 60vh;
+          margin: 10px auto;
+        }
+
+        .player-bench {
+          width: 95%;
+          padding: 5px;
+          margin: 10px auto;
+        }
+
+        .controls {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 5px;
+          padding: 5px;
+        }
+
+        button {
+          width: 100%;
+          padding: 8px 5px;
+          font-size: 14px;
+          margin: 0;
+          white-space: nowrap;
+        }
+
+        .player {
+          width: clamp(30px, 10vw, 40px);
+          height: clamp(30px, 10vw, 40px);
+          font-size: clamp(6px, 1.8vw, 8px);
+        }
+
+        .bench-player {
+          width: clamp(25px, 8vw, 35px);
+          height: clamp(25px, 8vw, 35px);
+          font-size: clamp(5px, 1.5vw, 7px);
+        }
+
+        .player-name {
+          font-size: clamp(8px, 2.5vw, 10px);
+          line-height: 1.2;
+        }
+
+        .player-list {
+          width: 95%;
+          margin: 10px auto;
+          overflow-x: auto;
+        }
+
+        table {
+          min-width: 100%;
+        }
+
+        th,
+        td {
+          padding: 8px 5px;
+          font-size: 12px;
+          white-space: nowrap;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        h1 {
+          font-size: 1rem;
+        }
+
+        .formation-name {
+          font-size: 14px;
+        }
+
+        .controls {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        button {
+          font-size: 12px;
+          padding: 6px 3px;
+        }
+
+        .player {
+          width: clamp(35px, 12vw, 50px);
+          height: clamp(35px, 12vw, 50px);
+        }
+
+        .bench-player {
+          width: clamp(30px, 10vw, 45px);
+          height: clamp(30px, 10vw, 45px);
+        }
+
+        .player-name {
+          font-size: clamp(6px, 2vw, 8px);
+        }
+
+        .bench-title {
+          font-size: 14px;
+        }
+
+        .player-list {
+          padding: 10px 5px;
+        }
+
+        .player-list h2 {
+          font-size: 16px;
+        }
+
+        .player-list table {
+          width: 100%;
+          min-width: 300px;
+        }
+
+        .player-list {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+
+      @media screen and (orientation: portrait) {
+        .football-field {
+          height: 50vh;
+        }
+
+        .player-bench {
+          min-height: 80px;
+        }
+      }
+
+      @media screen and (orientation: landscape) and (max-width: 900px) {
+        .football-field {
+          height: 70vh;
+        }
+
+        .controls {
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+      }
     </style>
   </head>
   <body>
@@ -383,29 +539,103 @@
     <script>
       // بيانات الطلاب
       const players = [
-        { id: 1, name: "حازم محمد عز الدين محمد قاسم", seatNumber: "C355" },
-        { id: 2, name: "رامي عبدالكريم احمد محمد", seatNumber: "C356" },
-        { id: 3, name: "شادي خلف الله احمد", seatNumber: "C357" },
-        { id: 4, name: "سيف الدين محمد صلاح زغلول", seatNumber: "C358" },
-        { id: 5, name: "سيف الله مصطفى غريب مصطفى محمد", seatNumber: "C359" },
-        { id: 6, name: "شهيد محمد محمود السيد", seatNumber: "C360" },
-        { id: 7, name: "طارق غريب جاد الرب عبد المجيد", seatNumber: "C361" },
-        { id: 8, name: "عبدالرحمن رياض حافظ محمد", seatNumber: "C362" },
+        {
+          id: 1,
+          name: getTripleName("حازم محمد عز الدين محمد قاسم"),
+          seatNumber: "C355",
+        },
+        {
+          id: 2,
+          name: getTripleName("رامي عبدالكريم احمد محمد"),
+          seatNumber: "C356",
+        },
+        {
+          id: 3,
+          name: getTripleName("شادي خلف الله احمد"),
+          seatNumber: "C357",
+        },
+        {
+          id: 4,
+          name: getTripleName("سيف الدين محمد صلاح زغلول"),
+          seatNumber: "C358",
+        },
+        {
+          id: 5,
+          name: getTripleName("سيف الله مصطفى غريب مصطفى محمد"),
+          seatNumber: "C359",
+        },
+        {
+          id: 6,
+          name: getTripleName("شهيد محمد محمود السيد"),
+          seatNumber: "C360",
+        },
+        {
+          id: 7,
+          name: getTripleName("طارق غريب جاد الرب عبد المجيد"),
+          seatNumber: "C361",
+        },
+        {
+          id: 8,
+          name: getTripleName("عبدالرحمن رياض حافظ محمد"),
+          seatNumber: "C362",
+        },
         {
           id: 9,
-          name: "عبدالله حسام محمود محمد عبد الرحيم",
+          name: getTripleName("عبدالله حسام محمود محمد عبد الرحيم"),
           seatNumber: "C363",
         },
-        { id: 10, name: "عبدالله محمود حسين محمد", seatNumber: "C364" },
-        { id: 11, name: "عدوي محمود عدوي محمود عبد", seatNumber: "C365" },
-        { id: 12, name: "علي احمد سعيد علي محمود", seatNumber: "C366" },
-        { id: 13, name: "عمر عبد العزيز احمد العزب", seatNumber: "C367" },
-        { id: 14, name: "عمر محمد فاروق محمد", seatNumber: "C368" },
-        { id: 15, name: "كريم حسين حسن حسين", seatNumber: "C369" },
-        { id: 16, name: "محمد احمد شحته احمد", seatNumber: "C370" },
-        { id: 17, name: "محمد محمود سلامه احمد", seatNumber: "C371" },
-        { id: 18, name: "محمد محمود عبد الفتاح ابو الحسن", seatNumber: "C372" },
+        {
+          id: 10,
+          name: getTripleName("عبدالله محمود حسين محمد"),
+          seatNumber: "C364",
+        },
+        {
+          id: 11,
+          name: getTripleName("عدوي محمود عدوي محمود عبد"),
+          seatNumber: "C365",
+        },
+        {
+          id: 12,
+          name: getTripleName("علي احمد سعيد علي محمود"),
+          seatNumber: "C366",
+        },
+        {
+          id: 13,
+          name: getTripleName("عمر عبد العزيز احمد العزب"),
+          seatNumber: "C367",
+        },
+        {
+          id: 14,
+          name: getTripleName("عمر محمد فاروق محمد"),
+          seatNumber: "C368",
+        },
+        {
+          id: 15,
+          name: getTripleName("كريم حسين حسن حسين"),
+          seatNumber: "C369",
+        },
+        {
+          id: 16,
+          name: getTripleName("محمد احمد شحته احمد"),
+          seatNumber: "C370",
+        },
+        {
+          id: 17,
+          name: getTripleName("محمد محمود سلامه احمد"),
+          seatNumber: "C371",
+        },
+        {
+          id: 18,
+          name: getTripleName("محمد محمود عبد الفتاح ابو الحسن"),
+          seatNumber: "C372",
+        },
       ];
+
+      // دالة لاستخراج الاسم الثلاثي
+      function getTripleName(fullName) {
+        const names = fullName.split(" ");
+        return names.slice(0, 3).join(" ");
+      }
 
       // تبديل السمة (الثيم)
       function toggleTheme() {
@@ -429,7 +659,78 @@
 
       createPlayerTable();
 
-      // إضافة اللاعبين للملعب ودكة الاحتياط
+      // تعريف مواقع اللاعبين حسب كل تشكيل
+      const formations = {
+        "4-4-2": [
+          { top: "85%", left: "50%", name: "عبدالله محمود" }, // حارس المرمى
+          // خط الدفاع
+          { top: "70%", left: "15%", name: "رامي عبدالكريم" },
+          { top: "70%", left: "35%", name: "شادي خلف" },
+          { top: "70%", left: "65%", name: "سيف الدين" },
+          { top: "70%", left: "85%", name: "سيف الله" },
+          // خط الوسط
+          { top: "45%", left: "15%", name: "شهيد محمد" },
+          { top: "45%", left: "35%", name: "طارق غريب" },
+          { top: "45%", left: "65%", name: "عبدالرحمن" },
+          { top: "45%", left: "85%", name: "عبدالله حسام" },
+          // خط الهجوم
+          { top: "20%", left: "35%", name: "عدوي محمود" },
+          { top: "20%", left: "65%", name: "حازم محمد" },
+        ],
+
+        "4-3-3": [
+          { top: "85%", left: "50%", name: "عبدالله محمود" },
+          // خط الدفاع
+          { top: "70%", left: "15%", name: "رامي عبدالكريم" },
+          { top: "70%", left: "35%", name: "شادي خلف" },
+          { top: "70%", left: "65%", name: "سيف الدين" },
+          { top: "70%", left: "85%", name: "سيف الله" },
+          // خط الوسط
+          { top: "45%", left: "30%", name: "شهيد محمد" },
+          { top: "45%", left: "50%", name: "طارق غريب" },
+          { top: "45%", left: "70%", name: "عبدالرحمن" },
+          // خط الهجوم
+          { top: "20%", left: "25%", name: "عبدالله حسام" },
+          { top: "15%", left: "50%", name: "حازم محمد" },
+          { top: "20%", left: "75%", name: "عدوي محمود" },
+        ],
+
+        "3-5-2": [
+          { top: "85%", left: "50%", name: "عبدالله محمود" },
+          // خط الدفاع
+          { top: "70%", left: "30%", name: "رامي عبدالكريم" },
+          { top: "70%", left: "50%", name: "شادي خلف" },
+          { top: "70%", left: "70%", name: "سيف الدين" },
+          // خط الوسط
+          { top: "45%", left: "15%", name: "سيف الله" },
+          { top: "45%", left: "30%", name: "شهيد محمد" },
+          { top: "40%", left: "50%", name: "طارق غريب" },
+          { top: "45%", left: "70%", name: "عبدالرحمن" },
+          { top: "45%", left: "85%", name: "عبدالله حسام" },
+          // خط الهجوم
+          { top: "20%", left: "35%", name: "عدوي محمود" },
+          { top: "20%", left: "65%", name: "حازم محمد" },
+        ],
+
+        "5-3-2": [
+          { top: "85%", left: "50%", name: "عبدالله محمود" },
+          // خط الدفاع
+          { top: "70%", left: "15%", name: "رامي عبدالكريم" },
+          { top: "72%", left: "30%", name: "شادي خلف" },
+          { top: "75%", left: "50%", name: "سيف الدين" },
+          { top: "72%", left: "70%", name: "سيف الله" },
+          { top: "70%", left: "85%", name: "شهيد محمد" },
+          // خط الوسط
+          { top: "45%", left: "30%", name: "طارق غريب" },
+          { top: "40%", left: "50%", name: "عبدالرحمن" },
+          { top: "45%", left: "70%", name: "عبدالله حسام" },
+          // خط الهجوم
+          { top: "20%", left: "35%", name: "عدوي محمود" },
+          { top: "20%", left: "65%", name: "حازم محمد" },
+        ],
+      };
+
+      // تعديل دالة إضافة اللاعبين
       function addPlayersToField(formation) {
         const field = document.getElementById("field");
         const bench = document.getElementById("player-bench");
@@ -440,128 +741,52 @@
         );
         existingPlayers.forEach((player) => player.remove());
 
-        // إضافة عنوان لدكة الاحتياط
-        if (!document.querySelector(".bench-title")) {
-          const benchTitle = document.createElement("div");
-          benchTitle.className = "bench-title";
-          benchTitle.textContent = "لاعبي الاحتياط";
-          bench.appendChild(benchTitle);
-        }
+        // الحصول على مواقع اللاعبين للتشكيل المحدد
+        const positions = formations[formation];
 
-        // إضافة اللاعبين حسب التشكيل
-        let positions = [];
-
-        switch (formation) {
-          case "4-4-2":
-            positions = [
-              { top: "85%", left: "50%" }, // حارس المرمى
-              { top: "70%", left: "20%" }, // دفاع
-              { top: "70%", left: "40%" }, // دفاع
-              { top: "70%", left: "60%" }, // دفاع
-              { top: "70%", left: "80%" }, // دفاع
-              { top: "50%", left: "20%" }, // وسط
-              { top: "50%", left: "40%" }, // وسط
-              { top: "50%", left: "60%" }, // وسط
-              { top: "50%", left: "80%" }, // وسط
-              { top: "25%", left: "35%" }, // هجوم
-              { top: "25%", left: "65%" }, // هجوم
-            ];
-            break;
-          case "4-3-3":
-            positions = [
-              { top: "85%", left: "50%" }, // حارس المرمى
-              { top: "70%", left: "20%" }, // دفاع
-              { top: "70%", left: "40%" }, // دفاع
-              { top: "70%", left: "60%" }, // دفاع
-              { top: "70%", left: "80%" }, // دفاع
-              { top: "50%", left: "30%" }, // وسط
-              { top: "50%", left: "50%" }, // وسط
-              { top: "50%", left: "70%" }, // وسط
-              { top: "25%", left: "25%" }, // هجوم
-              { top: "15%", left: "50%" }, // هجوم
-              { top: "25%", left: "75%" }, // هجوم
-            ];
-            break;
-          case "3-5-2":
-            positions = [
-              { top: "85%", left: "50%" }, // حارس المرمى
-              { top: "70%", left: "30%" }, // دفاع
-              { top: "70%", left: "50%" }, // دفاع
-              { top: "70%", left: "70%" }, // دفاع
-              { top: "50%", left: "15%" }, // وسط
-              { top: "50%", left: "35%" }, // وسط
-              { top: "45%", left: "50%" }, // وسط
-              { top: "50%", left: "65%" }, // وسط
-              { top: "50%", left: "85%" }, // وسط
-              { top: "25%", left: "35%" }, // هجوم
-              { top: "25%", left: "65%" }, // هجوم
-            ];
-            break;
-          case "5-3-2":
-            positions = [
-              { top: "85%", left: "50%" }, // حارس المرمى
-              { top: "70%", left: "15%" }, // دفاع
-              { top: "70%", left: "30%" }, // دفاع
-              { top: "75%", left: "50%" }, // دفاع
-              { top: "70%", left: "70%" }, // دفاع
-              { top: "70%", left: "85%" }, // دفاع
-              { top: "50%", left: "30%" }, // وسط
-              { top: "45%", left: "50%" }, // وسط
-              { top: "50%", left: "70%" }, // وسط
-              { top: "25%", left: "35%" }, // هجوم
-              { top: "25%", left: "65%" }, // هجوم
-            ];
-            break;
-        }
-
-        // حساب عدد اللاعبين في التشكيلة الأساسية
-        const starters = Math.min(11, players.length);
-
-        // إضافة اللاعبين الأساسيين في الملعب
-        for (let i = 0; i < starters; i++) {
+        // إضافة 11 لاعب للملعب
+        positions.forEach((pos, index) => {
           const player = document.createElement("div");
-          player.className = "player";
-          player.id = `player-field-${i}`;
-          player.setAttribute("data-player-id", players[i].id);
-          player.innerHTML = `<div class="player-name">${players[i].name}</div>`;
-          player.style.top = positions[i].top;
-          player.style.left = positions[i].left;
-          player.title = `${players[i].name} - ${players[i].seatNumber}`;
+          player.className = "player animate__animated animate__fadeIn";
+          player.id = `player-${index}`;
+          player.innerHTML = `<div class="player-name">${pos.name}</div>`;
+          player.style.top = pos.top;
+          player.style.left = pos.left;
+          player.title = pos.name;
 
-          // جعل اللاعبين قابلين للسحب
-          player.draggable = true;
-
-          // إضافة تأخير للرسوم المتحركة
           setTimeout(() => {
             field.appendChild(player);
-          }, i * 100);
-        }
+          }, index * 100);
+        });
 
-        // إضافة باقي اللاعبين في دكة الاحتياط
-        for (let i = starters; i < players.length; i++) {
-          const player = document.createElement("div");
-          player.className = "bench-player";
-          player.id = `player-bench-${i}`;
-          player.setAttribute("data-player-id", players[i].id);
-          player.innerHTML = `<div class="player-name">${players[i].name}</div>`;
-          player.title = `${players[i].name} - ${players[i].seatNumber}`;
+        // إضافة باقي اللاعبين للاحتياط
+        const benchPlayers = players.filter(
+          (player) => !positions.some((pos) => pos.name === player.name)
+        );
 
-          // جعل لاعبي الاحتياط قابلين للسحب
-          player.draggable = true;
+        benchPlayers.forEach((player, index) => {
+          const benchPlayer = document.createElement("div");
+          benchPlayer.className =
+            "bench-player animate__animated animate__fadeIn";
+          benchPlayer.id = `bench-player-${index}`;
+          benchPlayer.innerHTML = `<div class="player-name">${player.name}</div>`;
+          benchPlayer.title = `${player.name} - ${player.seatNumber}`;
+          benchPlayer.draggable = true;
 
-          // إضافة تأخير للرسوم المتحركة
           setTimeout(() => {
-            bench.appendChild(player);
-          }, (i - starters) * 100 + 500);
-        }
+            bench.appendChild(benchPlayer);
+          }, index * 100 + 500);
+        });
 
         // تحديث اسم التشكيل
         document.getElementById(
           "formation-name"
         ).textContent = `التشكيل ${formation}`;
 
-        // إعادة تعيين استماعات السحب والإفلات
-        setupDragAndDrop();
+        // إعادة تعيين وظائف السحب والإفلات
+        setTimeout(() => {
+          setupDragAndDrop();
+        }, 1000);
       }
 
       function changeFormation(formation) {
@@ -638,54 +863,64 @@
         e.preventDefault();
         this.classList.remove("dropzone");
 
+        const toField = this.id === "field";
+
+        // التحقق من عدد اللاعبين في الملعب قبل الإضافة
+        if (toField) {
+          const currentPlayers = document.querySelectorAll(".player").length;
+          if (currentPlayers >= 11) {
+            alert("لا يمكن إضافة أكثر من 11 لاعب في الملعب!");
+            return;
+          }
+        }
+
         const data = JSON.parse(e.dataTransfer.getData("application/json"));
         const draggedElement = document.getElementById(data.id);
 
         if (!draggedElement) return;
 
-        // تحديد ما إذا كان السحب من الملعب إلى الاحتياط أو العكس
-        const toField = this.id === "field";
         const fromField = data.fromField;
 
-        // إزالة العنصر المسحوب من الموقع الحالي
-        draggedElement.remove();
+        // إضافة فئة الرسم المتحرك للعنصر المسحوب
+        draggedElement.classList.add("animate__animated", "animate__bounceOut");
 
-        // إنشاء عنصر جديد في الموقع الهدف
-        const newElement = document.createElement("div");
+        setTimeout(() => {
+          draggedElement.remove();
 
-        if (toField) {
-          // إضافة لاعب إلى الملعب
-          newElement.className = "player";
-          newElement.id = `player-field-${Date.now()}`;
+          const newElement = document.createElement("div");
 
-          // تحديد الموقع في الملعب
-          const fieldRect = this.getBoundingClientRect();
-          const x = e.clientX - fieldRect.left;
-          const y = e.clientY - fieldRect.top;
+          if (toField) {
+            newElement.className = "player animate__animated animate__bounceIn";
+            newElement.id = `player-field-${Date.now()}`;
 
-          newElement.style.left = `${(x / fieldRect.width) * 100}%`;
-          newElement.style.top = `${(y / fieldRect.height) * 100}%`;
+            const fieldRect = this.getBoundingClientRect();
+            const x = e.clientX - fieldRect.left;
+            const y = e.clientY - fieldRect.top;
 
-          // رسم متحرك للإضافة إلى الملعب
-          newElement.style.animation = "playerAppear 0.5s ease-out";
-        } else {
-          // إضافة لاعب إلى الاحتياط
-          newElement.className = "bench-player";
-          newElement.id = `player-bench-${Date.now()}`;
+            newElement.style.left = `${(x / fieldRect.width) * 100}%`;
+            newElement.style.top = `${(y / fieldRect.height) * 100}%`;
+          } else {
+            newElement.className =
+              "bench-player animate__animated animate__bounceIn";
+            newElement.id = `player-bench-${Date.now()}`;
+          }
 
-          // رسم متحرك للإضافة إلى الاحتياط
-          newElement.style.animation = "playerAppear 0.5s ease-out";
-        }
+          newElement.setAttribute("data-player-id", data.playerId);
+          newElement.innerHTML = `<div class="player-name">${data.name}</div>`;
+          newElement.draggable = true;
+          newElement.addEventListener("dragstart", dragStart);
+          newElement.addEventListener("dragend", dragEnd);
 
-        // إعداد العنصر الجديد
-        newElement.setAttribute("data-player-id", data.playerId);
-        newElement.innerHTML = `<div class="player-name">${data.name}</div>`;
-        newElement.draggable = true;
-        newElement.addEventListener("dragstart", dragStart);
-        newElement.addEventListener("dragend", dragEnd);
+          this.appendChild(newElement);
 
-        // إضافة العنصر إلى الهدف
-        this.appendChild(newElement);
+          // إزالة فئات الرسوم المتحركة بعد الانتهاء
+          setTimeout(() => {
+            newElement.classList.remove(
+              "animate__animated",
+              "animate__bounceIn"
+            );
+          }, 1000);
+        }, 500);
       }
 
       // تحميل التشكيل الافتراضي
